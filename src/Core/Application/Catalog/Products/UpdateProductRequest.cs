@@ -1,4 +1,5 @@
 using FSH.WebApi.Domain.Common.Events;
+using System.Data;
 
 namespace FSH.WebApi.Application.Catalog.Products;
 
@@ -16,6 +17,7 @@ public class UpdateProductRequest : IRequest<Guid>
 public class UpdateProductRequestHandler : IRequestHandler<UpdateProductRequest, Guid>
 {
     private readonly IRepository<Product> _repository;
+    private readonly IDbConnection dbConnection;
     private readonly IStringLocalizer _t;
     private readonly IFileStorageService _file;
 

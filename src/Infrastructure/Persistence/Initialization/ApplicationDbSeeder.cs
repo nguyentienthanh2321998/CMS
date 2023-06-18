@@ -45,20 +45,36 @@ internal class ApplicationDbSeeder
                 role = new ApplicationRole(roleName, $"{roleName} Role for {_currentTenant.Id} Tenant");
                 await _roleManager.CreateAsync(role);
             }
-
             // Assign permissions
-            if (roleName == FSHRoles.Basic)
+            switch (roleName)
             {
-                await AssignPermissionsToRoleAsync(dbContext, FSHPermissions.Basic, role);
-            }
-            else if (roleName == FSHRoles.Admin)
-            {
-                await AssignPermissionsToRoleAsync(dbContext, FSHPermissions.Admin, role);
+                case FSHRoles.Admin:
+                    await AssignPermissionsToRoleAsync(dbContext, FSHPermissions.Admin, role);
 
-                if (_currentTenant.Id == MultitenancyConstants.Root.Id)
-                {
-                    await AssignPermissionsToRoleAsync(dbContext, FSHPermissions.Root, role);
-                }
+                    if (_currentTenant.Id == MultitenancyConstants.Root.Id)
+                    {
+                        await AssignPermissionsToRoleAsync(dbContext, FSHPermissions.Root, role);
+                    }
+                    break;
+                case FSHRoles.CEMaker:
+                    await AssignPermissionsToRoleAsync(dbContext, FSHPermissions.CEMaker, role);
+
+                    break;
+                case FSHRoles.CEChecker:
+                    await AssignPermissionsToRoleAsync(dbContext, FSHPermissions.CEChecker, role);
+
+                    break;
+                case FSHRoles.CCMaker:
+                    await AssignPermissionsToRoleAsync(dbContext, FSHPermissions.CCMaker, role);
+
+                    break;
+                case FSHRoles.CCChecker:
+                    await AssignPermissionsToRoleAsync(dbContext, FSHPermissions.CCChecker, role);
+                    break;
+                case FSHRoles.Basic:
+                    await AssignPermissionsToRoleAsync(dbContext, FSHPermissions.Basic, role);
+                    break;
+
             }
         }
     }

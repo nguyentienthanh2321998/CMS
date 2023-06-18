@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Serilog;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace FSH.WebApi.Infrastructure.Persistence;
 
@@ -44,7 +46,8 @@ internal static class Startup
 
             .AddTransient<IConnectionStringSecurer, ConnectionStringSecurer>()
             .AddTransient<IConnectionStringValidator, ConnectionStringValidator>()
-
+            .AddTransient<IDbConnection>(db => new SqlConnection(
+                   "Data Source=localhost;Initial Catalog=CMS;Integrated Security=True;TrustServerCertificate=True;"))
             .AddRepositories();
     }
 

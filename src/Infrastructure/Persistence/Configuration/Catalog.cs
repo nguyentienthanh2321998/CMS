@@ -16,6 +16,19 @@ public class BrandConfig : IEntityTypeConfiguration<Brand>
                 .HasMaxLength(256);
     }
 }
+public class CaseInformationConfig : IEntityTypeConfiguration<CaseInformation>
+{
+    public void Configure(EntityTypeBuilder<CaseInformation> builder)
+    {
+        builder.IsMultiTenant();
+
+        builder
+            .Property(b => b.Name)
+                .HasMaxLength(256);
+    }
+}
+
+
 
 public class ProductConfig : IEntityTypeConfiguration<Product>
 {
